@@ -10,7 +10,7 @@ window.INVITATION = {
       full: "Ahmad Asro’i",
       order: "Putra pertama",
       parents: "Bapak Satimen & Ibu Komariyah",
-      photo: "assets/images/foto-2.jpg",
+      photo: "assets/images/foto-2.webp",
       alt: "Ahmad Asro’i"
     },
     bride: {
@@ -18,7 +18,7 @@ window.INVITATION = {
       full: "Mega Lestari Purwaning Tias",
       order: "Putri pertama",
       parents: "Bapak Iswanto Sujati & Ibu Hamidah",
-      photo: "assets/images/foto-3.jpg",
+      photo: "assets/images/foto-3.webp",
       alt: "Mega Lestari Purwaning Tias"
     }
   },
@@ -26,28 +26,28 @@ window.INVITATION = {
   dateLabel: "Selasa, 17 November 2026",
   dateISO: "2026-11-17T07:00:00+07:00",
   coverPhoto: {
-    src: "assets/images/foto-1.jpg",
+    src: "assets/images/foto-1.webp",
     alt: "Mega dan Ahmad"
   },
 
   heroPhotos: [
     {
-      src: "assets/images/foto-1.jpg",
+      src: "assets/images/foto-1.webp",
       alt: "Mega dan Ahmad",
       position: "center 38%"
     },
     {
-      src: "assets/images/foto-3.jpg",
+      src: "assets/images/foto-3.webp",
       alt: "Mega dan Ahmad",
       position: "center"
     },
     {
-      src: "assets/images/foto-2.jpg",
+      src: "assets/images/foto-2.webp",
       alt: "Mega dan Ahmad",
       position: "center 30%"
     },
     {
-      src: "assets/images/gallery/foto-4.jpeg",
+      src: "assets/images/gallery/foto-4.webp",
       alt: "Momen Mega dan Ahmad",
       position: "center 32%"
     }
@@ -67,7 +67,7 @@ window.INVITATION = {
       date: "Selasa, 17 November 2026",
       time: "07.00 WIB – selesai",
       place: "Kediaman Mempelai Wanita",
-      address: "Jl. Sukorejo Baru, Gg. Mawar 05, RT 12/RW 04, Kecamatan Buduran, Kabupaten Sidoarjo",
+      address: "Jl. Sukorejo Baru, Gg. Mawar 05, RT 12/RW 04, Kec. Buduran, Kab. Sidoarjo",
       mapUrl: "https://maps.app.goo.gl/aA22TDsHxBKrpXBt7",
       icon: "rings"
     },
@@ -77,40 +77,40 @@ window.INVITATION = {
       date: "Selasa, 17 November 2026",
       time: "15.00 WIB – selesai",
       place: "Kediaman Mempelai Wanita",
-      address: "Jl. Sukorejo Baru, Gg. Mawar 05, RT 12/RW 04, Kecamatan Buduran, Kabupaten Sidoarjo",
-      mapUrl: "https://www.google.com/maps/search/?api=1&query=Jl.+Sukorejo+Baru+Gg.+Mawar+05+RT+12+RW+04+Kecamatan+Buduran+Kabupaten+Sidoarjo",
+      address: "Jl. Sukorejo Baru, Gg. Mawar 05, RT 12/RW 04, Kec. Buduran, Kab. Sidoarjo",
+      mapUrl: "https://www.google.com/maps/search/?api=1&query=Jl.+Sukorejo+Baru,+Gg.+Mawar+05+RT+12+RW+04+Kec.+Buduran+Kab.+Sidoarjo",
       icon: "glass"
     }
   ],
 
   gallery: [
     {
-      src: "assets/images/foto-1.jpg",
+      src: "assets/images/foto-1.webp",
       alt: "Mega dan Ahmad",
       position: "center 32%"
     },
     {
-      src: "assets/images/foto-2.jpg",
+      src: "assets/images/foto-2.webp",
       alt: "Mega dan Ahmad",
       position: "center 28%"
     },
     {
-      src: "assets/images/foto-3.jpg",
+      src: "assets/images/foto-3.webp",
       alt: "Mega dan Ahmad",
       position: "center"
     },
     {
-      src: "assets/images/gallery/foto-4.jpeg",
+      src: "assets/images/gallery/foto-4.webp",
       alt: "Momen Mega dan Ahmad",
       position: "center 28%"
     },
     {
-      src: "assets/images/gallery/foto-5.jpeg",
+      src: "assets/images/gallery/foto-5.webp",
       alt: "Momen Mega dan Ahmad",
       position: "center"
     },
     {
-      src: "assets/images/gallery/foto-6.jpeg",
+      src: "assets/images/gallery/foto-6.webp",
       alt: "Momen Mega dan Ahmad",
       position: "center"
     }
@@ -137,8 +137,7 @@ window.INVITATION = {
       recipient: "Mega Lestari P.T",
       lines: [
         "Jl. Sukorejo Baru, Gg. Mawar 05, RT 12/RW 04",
-        "Kelurahan/Kecamatan Buduran",
-        "Kabupaten Sidoarjo",
+        "Kec. Buduran, Kab. Sidoarjo",
         "Jawa Timur 61252"
       ]
     }
@@ -151,7 +150,7 @@ window.INVITATION = {
   },
 
   music: {
-    src: "assets/audio/bgm.mp3",
+    src: "assets/audio/bgm.webm",
     volume: 0.42
   },
 

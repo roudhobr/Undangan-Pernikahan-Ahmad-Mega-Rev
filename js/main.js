@@ -1,6 +1,18 @@
 (() => {
   "use strict";
 
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  if (window.location.hash) {
+    try {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    } catch (e) {}
+  }
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  document.documentElement.scrollTop = 0;
+  if (document.body) document.body.scrollTop = 0;
+
   const data = window.INVITATION;
   if (!data) return;
 
@@ -14,6 +26,44 @@
   const audio = $("#bgm");
 
   document.documentElement.classList.add("js-reveal");
+
+  try {
+    if (body) {
+      body.classList.remove("is-open");
+      body.classList.add("is-locked");
+    }
+    if (cover) {
+      cover.classList.remove("is-open");
+      cover.hidden = false;
+    }
+    if (main) {
+      main.setAttribute("inert", "");
+      main.setAttribute("aria-hidden", "true");
+      main.removeAttribute("tabindex");
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+  } catch (e) {}
+
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      try {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+        if (window.location.hash) {
+          history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
+        window.location.reload();
+        return;
+      } catch (e) {
+        window.location.reload();
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  });
 
   const normalizeGuestName = (value) =>
     String(value || "")
@@ -967,8 +1017,11 @@
     if (openButton) openButton.addEventListener("click", openInvitation);
   }
 
-  main.setAttribute("inert", "");
-  main.setAttribute("aria-hidden", "true");
+  if (main) {
+    main.setAttribute("inert", "");
+    main.setAttribute("aria-hidden", "true");
+  }
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 
   window.addEventListener("load", () => {
     const firstSlide = $(".hero__slide.is-active img");
