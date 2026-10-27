@@ -810,31 +810,12 @@
     }
   });
 
-  const storageKey = "mega-ahmad-wishes-v1";
-  const getStoredWishes = () => {
-    try {
-      const stored = JSON.parse(window.localStorage.getItem(storageKey) || "[]");
-      return Array.isArray(stored) ? stored.slice(0, 60) : [];
-    } catch (error) {
-      return [];
-    }
-  };
-
-  const saveWish = (wish) => {
-    const wishes = getStoredWishes();
-    wishes.unshift(wish);
-    try {
-      window.localStorage.setItem(storageKey, JSON.stringify(wishes.slice(0, 60)));
-    } catch (error) {
-      return wishes.slice(0, 60);
-    }
-    return wishes.slice(0, 60);
-  };
-
+  const wishesUrl = (data.forms && data.forms.wishesUrl) || "";
   const wishList = $("#wishList");
-  const renderWishes = () => {
+  let wishCache = [];
+
+  const renderWishes = (wishes) => {
     if (!wishList) return;
-    const wishes = getStoredWishes();
     wishList.replaceChildren();
 
     if (!wishes.length) {
@@ -860,7 +841,24 @@
     });
   };
 
-  renderWishes();
+  const loadWishes = async () => {
+    if (!wishesUrl) return;
+    try {
+      const res = await fetch(wishesUrl, { cache: "no-store" });
+      if (!res.ok) throw new Error("Gagal memuat ucapan");
+      const list = await res.json();
+      if (Array.isArray(list)) {
+        wishCache = list;
+        renderWishes(wishCache);
+      }
+    } catch (error) {
+      // Biarkan daftar yang sudah tampil; hanya catat di console
+      console.warn("Daftar ucapan belum bisa dimuat:", error);
+    }
+  };
+
+  renderWishes(wishCache);
+  loadWishes();
 
   const endpoint = (data.forms && data.forms.endpoint) || "";
   const hasEndpoint = /^https:\/\/formspree\.io\/f\/[A-Za-z0-9_-]+/.test(endpoint);
@@ -887,6 +885,34 @@
     rsvpConfirm.addEventListener("change", syncRsvpGuests);
     syncRsvpGuests();
   }
+
+  // Kirim data ke Google Apps Script dan WAJIB membaca balasannya.
+  // Jika skrip menolak / error / tidak bisa dihubungi -> melempar error (tampil pesan gagal).
+  const postToSheet = async (formData) => {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 20000);
+    try {
+      const res = await fetch(wishesUrl, {
+        method: "POST",
+        body: new URLSearchParams(formData),
+        signal: controller.signal
+      });
+      if (!res.ok) throw new Error("Server menjawab status " + res.status);
+
+      let result;
+      try {
+        result = await res.json();
+      } catch (parseError) {
+        throw new Error("Balasan skrip bukan JSON (cek Deploy: Who has access = Anyone)");
+      }
+      if (!result || result.ok !== true) {
+        throw new Error("Ditolak skrip: " + ((result && result.error) || "tidak diketahui"));
+      }
+      return result;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  };
 
   const submitForm = async (form, formType) => {
     const status = $(".form__status", form);
@@ -920,7 +946,9 @@
     const messageValue = String(formData.get("pesan") || "").trim();
 
     try {
-      if (hasEndpoint) {
+      if (wishesUrl) {
+        await postToSheet(formData);
+      } else if (hasEndpoint) {
         const response = await fetch(endpoint, {
           method: "POST",
           body: formData,
@@ -932,8 +960,8 @@
       }
 
       if (formType === "wish") {
-        saveWish({ name: nameValue, message: messageValue });
-        renderWishes();
+        wishCache.unshift({ name: nameValue, message: messageValue });
+        renderWishes(wishCache);
         if (status) {
           status.className = "form__status is-success";
           status.textContent = "Terima kasih atas doa dan ucapan Anda.";
@@ -954,6 +982,7 @@
         showToast("Konfirmasi berhasil dikirim.");
       }
     } catch (error) {
+      console.error("Gagal mengirim form:", error);
       if (status) {
         status.className = "form__status is-error";
         status.textContent = "Maaf, kiriman belum berhasil. Silakan coba lagi.";

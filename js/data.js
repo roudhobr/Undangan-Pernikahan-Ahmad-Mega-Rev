@@ -145,6 +145,7 @@ window.INVITATION = {
 
   forms: {
     endpoint: "https://formspree.io/f/xvkkzbaz",
+    wishesUrl: "https://script.google.com/macros/s/AKfycbzrUcWCFfevPEFt5JsuBuNp--xgajzGvdoBkyvpe3_ya3Z0ae18c05exq0HOdYMVNWkMQ/exec",
     rsvpSubject: "RSVP Pernikahan Mega & Ahmad",
     wishSubject: "Ucapan untuk Mega & Ahmad"
   },
