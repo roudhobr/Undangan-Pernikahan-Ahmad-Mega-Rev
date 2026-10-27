@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Wedding Of</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400&display=swap">
+<style>
+/* ===== WARNA: ubah di sini agar cocok dengan asset Anda ===== */
+:root{--hijau:#2f4a3a;--hijau2:#436451;--emas:#b8914a;--paper:#fbfaf7;--ink:#2b3a31;--kartu:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:12px}
+body{margin:0;background:#d9ded8;color:var(--ink);font:300 15px/1.75 Jost,"Segoe UI",sans-serif;overflow-x:hidden}
+body.kunci{overflow:hidden}
+h1,h2,h3,h4{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;margin:0;line-height:1.15}
+.app{max-width:480px;margin:0 auto;background:var(--paper);position:relative;box-shadow:0 0 40px rgba(0,0,0,.15);padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+section{position:relative;padding:76px 28px;text-align:center;overflow:hidden;background:radial-gradient(90% 40% at 100% 0%,rgba(184,145,74,.16),transparent 70%),radial-gradient(80% 40% at 0% 100%,rgba(67,100,81,.14),transparent 70%),linear-gradient(180deg,#fbfaf7 0%,#eef2e8 100%)}
+.nama{font-family:"Great Vibes","Brush Script MT",cursive;font-weight:400;color:var(--hijau);font-size:3.4rem;line-height:1.05}
+.kecil{letter-spacing:.2em;font-size:.78rem;text-transform:uppercase}
+.emas{color:var(--emas)}
+.hijau{background:radial-gradient(90% 45% at 50% 0%,rgba(230,201,138,.30),transparent 70%),radial-gradient(70% 40% at 100% 100%,rgba(230,201,138,.18),transparent 70%),linear-gradient(165deg,#1f3529 0%,var(--hijau2) 52%,#2a4435 100%);color:#f4efe6}
+.hijau .nama{color:#f4efe6}
+
+/* ===== SLOT GAMBAR: nama file ada di atribut data-img ===== */
+.slot{position:relative}
+.slot img{display:block;width:100%;height:100%;object-fit:cover}
+.slot.kosong{display:flex;align-items:center;justify-content:center;border:1.5px dashed var(--emas);background:rgba(184,145,74,.1);color:var(--emas);font-size:.7rem;text-align:center;padding:4px;word-break:break-all}
+.slot.kosong::after{content:attr(data-img)}
+.orn{position:absolute;width:40%;max-width:180px;aspect-ratio:1;pointer-events:none;z-index:1}
+.orn.kosong{opacity:.75}
+.kiri-atas{left:-14px;top:-10px}
+.kanan-atas{right:-14px;top:-10px;transform:scaleX(-1)}
+.kiri-bawah{left:-14px;bottom:-10px;transform:scaleY(-1)}
+.kanan-bawah{right:-14px;bottom:-10px;transform:scale(-1,-1)}
+
+/* ===== ANIMASI ORNAMEN (loop) ===== */
+.goyang img,.goyang.kosong{transform-origin:top center;animation:goyang 5s ease-in-out infinite}
+.melayang img,.melayang.kosong{animation:melayang 6s ease-in-out infinite}
+.putar img{animation:putar 40s linear infinite}
+@keyframes goyang{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes melayang{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes putar{to{transform:rotate(360deg)}}
+
+/* ===== ANIMASI MUNCUL SAAT SCROLL ===== */
+[data-anim]{opacity:0;transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms)}
+[data-anim=up]{transform:translateY(40px)}[data-anim=down]{transform:translateY(-40px)}
+[data-anim=left]{transform:translateX(-60px)}[data-anim=right]{transform:translateX(60px)}
+[data-anim=zoom]{transform:scale(.75)}
+[data-anim].in{opacity:1;transform:none}
+
+/* ===== COVER ===== */
+#cover{position:fixed;inset:0;z-index:60;display:flex;justify-content:center;transition:transform 1.2s cubic-bezier(.7,0,.2,1)}
+#cover.buka{transform:translateY(-103%)}
+#cover .isi{position:relative;width:100%;max-width:480px;height:100%;overflow:hidden;background:radial-gradient(80% 45% at 50% 100%,rgba(230,201,138,.32),transparent 70%),radial-gradient(100% 60% at 50% 0%,rgba(230,201,138,.20),transparent 70%),linear-gradient(165deg,#1f3529 0%,var(--hijau2) 55%,#2a4435 100%);color:#f4efe6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+#cover .nama{font-size:4.4rem;color:#f4efe6}
+.tamu{margin:1.6rem 0 1.4rem}
+.tamu b{display:block;font:600 1.7rem "Cormorant Garamond",Georgia,serif;color:#e6c98a;word-break:break-word}
+.btn{font:inherit;background:var(--emas);color:#fff;border:0;border-radius:999px;padding:12px 32px;cursor:pointer;letter-spacing:.04em;position:relative;z-index:2}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.nav a:focus-visible{outline:3px solid #e6c98a;outline-offset:2px}
+.denyut{animation:denyut 2.4s ease-in-out infinite}
+@keyframes denyut{0%,100%{box-shadow:0 0 0 0 rgba(230,201,138,.6)}50%{box-shadow:0 0 0 14px rgba(230,201,138,0)}}
+.cover-foto{width:190px;height:240px;border-radius:95px 95px 6px 6px;overflow:hidden;margin:18px auto 8px;position:relative;z-index:2}
+
+/* ===== HERO & COUNTDOWN ===== */
+.foto-lengkung{width:230px;height:300px;margin:26px auto;position:relative;z-index:2}
+.bingkai{position:absolute;inset:-6px;z-index:3;pointer-events:none}
+.hitung{display:flex;justify-content:center;gap:10px;margin:1.2rem 0 0;position:relative;z-index:2}
+.hitung div{min-width:70px;padding:10px 4px;border:1px solid rgba(230,201,138,.7);border-radius:8px}
+.hitung b{display:block;font:600 2rem "Cormorant Garamond",Georgia,serif;color:#e6c98a;font-variant-numeric:tabular-nums}
+.hitung span{font-size:.75rem}
+.ayat{font:italic 500 1.2rem/1.6 "Cormorant Garamond",Georgia,serif;position:relative;z-index:2}
+
+/* ===== KARTU ===== */
+.kartu{position:relative;z-index:2;background:linear-gradient(160deg,#ffffff,#f6f1e4);border:1px solid rgba(184,145,74,.5);border-radius:12px;padding:26px 20px;margin-top:20px}
+.kartu h3{font-size:1.9rem;color:var(--hijau)}
+.potret{width:180px;height:230px;margin:0 auto 16px;border-radius:90px 90px 6px 6px;overflow:hidden;position:relative;z-index:2}
+.dan{font:500 2.4rem "Great Vibes",cursive;color:var(--emas);margin:18px 0;position:relative;z-index:2}
+.btn.kecilbtn{padding:8px 22px;font-size:.85rem;margin-top:10px}
+.btn.garis{background:transparent;color:var(--hijau);border:1px solid var(--hijau)}
+
+/* ===== GALERI ===== */
+.galeri{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative;z-index:2}
+.galeri .slot{aspect-ratio:3/4;border-radius:8px;overflow:hidden}
+.galeri .slot:nth-child(3n+1){grid-column:span 2;aspect-ratio:16/10}
+
+/* ===== FORM ===== */
+.f{position:relative;z-index:2;text-align:left;margin-top:18px}
+.f label{display:block;font-size:.85rem;margin:12px 0 4px}
+.f input,.f select,.f textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid rgba(47,74,58,.3);border-radius:8px;background:#fff;color:var(--ink)}
+.f .btn{margin-top:16px;width:100%}
+.ok{display:none;margin-top:12px;color:var(--hijau);text-align:center}
+.ucapan{position:relative;z-index:2;text-align:left;margin-top:18px;max-height:300px;overflow:auto}
+.ucapan div{background:#fff;border-left:3px solid var(--emas);padding:10px 14px;margin-bottom:10px;border-radius:6px}
+.ucapan b{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.1rem}
+.rek{font:600 1.5rem "Cormorant Garamond",Georgia,serif;letter-spacing:.06em}
+
+/* ===== MENU BAWAH ===== */
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;z-index:40;display:flex;background:var(--hijau);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.nav a{flex:1;text-align:center;color:#f4efe6;text-decoration:none;font-size:.72rem;padding:8px 2px;border-radius:8px}
+.nav a.aktif{background:rgba(255,255,255,.14);color:#e6c98a}
+
+@media (prefers-reduced-motion:reduce){
+  [data-anim]{opacity:1;transform:none;transition:none}
+  .goyang img,.melayang img,.putar img,.goyang.kosong,.melayang.kosong,.denyut{animation:none}
+  #cover{transition:none}html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body class="kunci">
+
+<!-- ================= COVER ================= -->
+<div id="cover"><div class="isi">
+  <div class="slot orn kiri-atas goyang" data-img="awan 1.png"></div>
+  <div class="slot orn kanan-atas goyang" data-img="awan 1.png"></div>
+  <div class="slot orn kiri-bawah melayang" data-img="Ornate Gunung.png"></div>
+  <div class="slot orn kanan-bawah melayang" data-img="Ornate Gunung.png"></div>
+  <span class="kecil">The Wedding Of</span>
+  <div class="cover-foto slot" data-img="foto1.jpg"></div>
+  <div class="nama"><span data-k="pria"></span> &amp;<br><span data-k="wanita"></span></div>
+  <p style="margin:.4rem 0 0" data-k="tanggalTeks"></p>
+  <div class="tamu"><span>Kepada Yth. Bapak/Ibu/Saudara/i</span><b id="tamu">Tamu Undangan</b></div>
+  <button class="btn denyut" id="buka" type="button">Buka Undangan</button>
+</div></div>
+
+<div class="app">
+
+<!-- ================= HERO ================= -->
+<section id="hom" class="hijau">
+  <div class="slot orn kiri-atas goyang" data-img="Elemen1.png"></div>
+  <div class="slot orn kanan-atas goyang" data-img="Elemen1.png"></div>
+  <span class="kecil" data-anim="down">The Wedding Of</span>
+  <div class="foto-lengkung" data-anim="zoom" style="--d:200ms">
+    <div class="slot" style="width:100%;height:100%;border-radius:115px 115px 8px 8px;overflow:hidden" data-img="Foto-Cover.jpg"></div>
+    <div class="slot bingkai" data-img="Elemen4.png"></div>
+  </div>
+  <div class="nama" data-anim="up" style="--d:300ms"><span data-k="pria"></span> &amp; <span data-k="wanita"></span></div>
+  <p data-anim="up" style="--d:450ms" data-k="tanggalTeks"></p>
+  <h3 class="kecil" style="margin-top:34px;font-family:Jost" data-anim="up">Save The Date</h3>
+  <div class="hitung" data-anim="up" style="--d:200ms">
+    <div><b id="h">0</b><span>Hari</span></div><div><b id="j">0</b><span>Jam</span></div>
+    <div><b id="m">0</b><span>Menit</span></div><div><b id="d">0</b><span>Detik</span></div>
+  </div>
+  <div class="slot orn kiri-bawah melayang" data-img="Ornate Gunung.png"></div>
+  <div class="slot orn kanan-bawah melayang" data-img="Ornate Gunung.png"></div>
+</section>
+
+<!-- ================= AYAT ================= -->
+<section>
+  <div class="slot orn kanan-atas goyang" data-img="Elemen3.png"></div>
+  <p class="ayat" data-anim="up" data-k="ayat"></p>
+  <div class="slot" data-img="Elemen5.png" style="width:60%;height:28px;margin:26px auto 0" data-anim="zoom"></div>
+</section>
+
+<!-- ================= MEMPELAI ================= -->
+<section id="kopel" style="background:radial-gradient(90% 40% at 0% 0%,rgba(242,214,206,.55),transparent 70%),radial-gradient(90% 40% at 100% 100%,rgba(184,145,74,.20),transparent 70%),linear-gradient(180deg,#fbfaf7,#eaf0e4)">
+  <div class="slot orn kiri-atas goyang" data-img="Elemen1.png"></div>
+  <div class="slot orn kanan-bawah melayang" data-img="Elemen2.png"></div>
+  <p data-anim="up" style="position:relative;z-index:2">Tanpa mengurangi rasa hormat, dengan ini kami mengundang Bapak/Ibu/Saudara/i untuk hadir pada acara pernikahan kami</p>
+  <div data-anim="left" style="margin-top:34px">
+    <div class="potret slot" data-img="Foto-Pria.jpg"></div>
+    <div class="nama" data-k="pria"></div>
+    <h3 data-k="priaLengkap"></h3>
+    <p class="emas" style="margin:0" data-k="kotaPria"></p>
+    <p style="position:relative;z-index:2" data-k="ortuPria"></p>
+  </div>
+  <div class="dan" data-anim="zoom">And</div>
+  <div data-anim="right">
+    <div class="potret slot" data-img="Foto-Wanita.jpg"></div>
+    <div class="nama" data-k="wanita"></div>
+    <h3 data-k="wanitaLengkap"></h3>
+    <p class="emas" style="margin:0" data-k="kotaWanita"></p>
+    <p style="position:relative;z-index:2" data-k="ortuWanita"></p>
+  </div>
+</section>
+
+<!-- ================= ACARA ================= -->
+<section id="lokasi" class="hijau">
+  <div class="slot orn kanan-atas goyang" data-img="Elemen3.png"></div>
+  <div class="slot orn kiri-bawah melayang" data-img="Elemen2.png"></div>
+  <span class="kecil" data-anim="up">Wedding</span>
+  <h2 class="nama" data-anim="up" style="--d:150ms">Event</h2>
+  <div class="kartu" data-anim="up" style="--d:100ms;color:var(--ink)">
+    <h3>Akad</h3>
+    <p class="emas" style="margin:6px 0" data-k="tanggalTeks"></p>
+    <p style="margin:0" data-k="akadJam"></p><b data-k="akadTempat"></b>
+    <p data-k="akadAlamat"></p>
+    <a class="btn kecilbtn" data-href="akadMap" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Google Map</a>
+  </div>
+  <div class="kartu" data-anim="up" style="--d:250ms;color:var(--ink)">
+    <h3>Resepsi Pernikahan</h3>
+    <p class="emas" style="margin:6px 0" data-k="tanggalTeks"></p>
+    <p style="margin:0" data-k="resepsiJam"></p><b data-k="resepsiTempat"></b>
+    <p data-k="resepsiAlamat"></p>
+    <a class="btn kecilbtn" data-href="resepsiMap" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Google Map</a>
+  </div>
+</section>
+
+<!-- ================= GALERI ================= -->
+<section id="galeri">
+  <div class="slot orn kiri-atas goyang" data-img="Elemen1.png"></div>
+  <span class="kecil" data-anim="up">Gallery</span>
+  <h2 class="nama" data-anim="up" style="margin-bottom:22px">Momen Kami</h2>
+  <div class="galeri">
+    <div class="slot" data-anim="zoom" data-img="Galeri1.jpg"></div>
+    <div class="slot" data-anim="left" data-img="Galeri2.jpg"></div>
+    <div class="slot" data-anim="right" data-img="Galeri3.jpg"></div>
+    <div class="slot" data-anim="zoom" data-img="Galeri4.jpg"></div>
+    <div class="slot" data-anim="left" data-img="Galeri5.jpg"></div>
+    <div class="slot" data-anim="right" data-img="Galeri6.jpg"></div>
+  </div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section style="background:radial-gradient(90% 45% at 100% 0%,rgba(184,145,74,.22),transparent 70%),radial-gradient(80% 40% at 0% 100%,rgba(242,214,206,.55),transparent 70%),linear-gradient(180deg,#eaf0e4,#f6efe0)">
+  <div class="slot orn kanan-atas goyang" data-img="Elemen3.png"></div>
+  <h2 class="nama" data-anim="up"><span data-k="pria"></span> &amp; <span data-k="wanita"></span></h2>
+  <span class="kecil" data-anim="up">Story</span>
+  <h3 style="margin:22px 0 10px;font-size:1.8rem;position:relative;z-index:2" data-anim="up">Awal Bertemu</h3>
+  <p style="position:relative;z-index:2" data-anim="up" data-k="cerita"></p>
+</section>
+
+<!-- ================= RSVP ================= -->
+<section>
+  <div class="slot orn kiri-bawah melayang" data-img="Elemen2.png"></div>
+  <h3 style="font-size:2rem" data-anim="up">Konfirmasi Kehadiran</h3>
+  <p data-anim="up" style="position:relative;z-index:2">Mohon kesediaannya untuk melakukan konfirmasi kehadiran, supaya kami bisa mempersiapkan kehadiran Anda dengan baik.</p>
+  <div class="f" data-anim="up">
+    <label for="rs">Konfirmasi</label>
+    <select id="rs"><option>Bersedia Hadir</option><option>Belum Bisa Hadir</option></select>
+    <label for="rj">Jumlah Hadir</label>
+    <select id="rj"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+    <button class="btn" id="kirimRsvp" type="button">Kirim Konfirmasi</button>
+    <p class="ok" id="okRsvp">Terima kasih, konfirmasi Anda sudah tercatat.</p>
+  </div>
+</section>
+
+<!-- ================= HADIAH ================= -->
+<section class="hijau">
+  <div class="slot orn kanan-atas goyang" data-img="Elemen3.png"></div>
+  <h3 class="nama" style="font-size:2.6rem" data-anim="up">Wedding Gift</h3>
+  <p data-anim="up" style="position:relative;z-index:2">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado melalui:</p>
+  <div class="kartu" data-anim="up" style="color:var(--ink)">
+    <h4 class="emas" data-k="bank1"></h4><p style="margin:0" data-k="atasNama1"></p>
+    <div class="rek" data-k="rek1" id="rek1"></div>
+    <button class="btn kecilbtn" data-salin="rek1" type="button">Salin Rekening</button>
+  </div>
+  <div class="kartu" data-anim="up" style="--d:150ms;color:var(--ink)">
+    <h4 class="emas" data-k="bank2"></h4><p style="margin:0" data-k="atasNama2"></p>
+    <div class="rek" data-k="rek2" id="rek2"></div>
+    <button class="btn kecilbtn" data-salin="rek2" type="button">Salin Rekening</button>
+  </div>
+</section>
+
+<!-- ================= UCAPAN ================= -->
+<section id="selamat">
+  <h3 style="font-size:2rem" data-anim="up">Friends Wishes</h3>
+  <div class="f" data-anim="up">
+    <label for="un">Nama</label><input id="un" type="text" placeholder="Nama Anda">
+    <label for="ut">Ucapan</label><textarea id="ut" rows="3" placeholder="Tulis ucapan dan doa"></textarea>
+    <button class="btn" id="kirimUcapan" type="button">Kirim Ucapan</button>
+  </div>
+  <div class="ucapan" id="daftar"></div>
+</section>
+
+<!-- ================= PENUTUP ================= -->
+<section class="hijau" style="padding-bottom:60px">
+  <div class="slot orn kiri-atas goyang" data-img="Elemen1.png"></div>
+  <div class="slot orn kanan-atas goyang" data-img="Elemen1.png"></div>
+  <p data-anim="up" style="margin-top:50px;position:relative;z-index:2">Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kedua mempelai.</p>
+  <span class="kecil" data-anim="up">The Wedding Of</span>
+  <div class="nama" data-anim="zoom"><span data-k="pria"></span> &amp; <span data-k="wanita"></span></div>
+</section>
+</div>
+
+<nav class="nav" id="nav" aria-label="Menu">
+  <a href="#hom" class="aktif">Cover</a><a href="#kopel">Couple</a><a href="#lokasi">Event</a><a href="#galeri">Gallery</a><a href="#selamat">Wishes</a>
+</nav>
+
+<script>
+/* ===== DATA UNDANGAN: ubah semua teks di sini ===== */
+var C={
+  pria:"Raka", wanita:"Sinta",
+  priaLengkap:"Raka Pratama Putra", wanitaLengkap:"Sinta Maharani",
+  kotaPria:"Surabaya", kotaWanita:"Malang",
+  ortuPria:"Putra pertama dari Bapak Nama Ayah & Ibu Nama Ibu",
+  ortuWanita:"Putri pertama dari Bapak Nama Ayah & Ibu Nama Ibu",
+  tanggalTeks:"Selasa, 17 November 2026",
+  target:"2026-11-17T08:00:00+07:00",
+  ayat:"“Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.” (QS. Ar-Rum: 21)",
+  akadJam:"08.00 WIB", akadTempat:"Nama Tempat Akad", akadAlamat:"Alamat lengkap tempat akad", akadMap:"https://maps.google.com",
+  resepsiJam:"11.00 – 14.00 WIB", resepsiTempat:"Nama Tempat Resepsi", resepsiAlamat:"Alamat lengkap tempat resepsi", resepsiMap:"https://maps.google.com",
+  cerita:"Tulis kisah pertemuan Anda berdua di sini. Ceritakan bagaimana kalian bertemu, perjalanan yang dilalui, hingga akhirnya memutuskan untuk melangkah bersama.",
+  bank1:"BNI", atasNama1:"NAMA PEMILIK", rek1:"0000000000",
+  bank2:"BANK MANDIRI", atasNama2:"NAMA PEMILIK", rek2:"0000000000"
+};
+
+/* Isi teks */
+document.querySelectorAll("[data-k]").forEach(function(e){e.textContent=C[e.dataset.k]});
+document.querySelectorAll("[data-href]").forEach(function(e){e.href=C[e.dataset.href]});
+
+/* Nama tamu: tambahkan ?untuk=Nama pada link */
+try{var n=new URLSearchParams(location.search).get("untuk");if(n)document.getElementById("tamu").textContent=n}catch(e){}
+
+/* Slot gambar: muat file; jika tidak ada, tampil kotak putus-putus berisi nama file */
+document.querySelectorAll(".slot").forEach(function(s){
+  var im=new Image();im.alt="";
+  im.onload=function(){s.appendChild(im)};
+  im.onerror=function(){s.classList.add("kosong")};
+  im.src=s.dataset.img;
+});
+
+/* Buka undangan */
+var cv=document.getElementById("cover");
+document.getElementById("buka").onclick=function(){
+  cv.classList.add("buka");document.body.classList.remove("kunci");
+  setTimeout(function(){cv.style.display="none"},1300);
+};
+
+/* Animasi muncul saat scroll */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll("[data-anim]").forEach(function(e){io.observe(e)});
+
+/* Menu bawah: tandai bagian aktif */
+var links=[].slice.call(document.querySelectorAll("#nav a"));
+var so=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){links.forEach(function(a){a.classList.toggle("aktif",a.getAttribute("href")==="#"+e.target.id)})}
+})},{threshold:.4});
+links.forEach(function(a){var t=document.querySelector(a.getAttribute("href"));if(t)so.observe(t)});
+
+/* Hitung mundur */
+var tg=new Date(C.target).getTime();
+function hit(){var s=Math.max(0,Math.floor((tg-Date.now())/1000));
+  h.textContent=Math.floor(s/86400);j.textContent=Math.floor(s%86400/3600);m.textContent=Math.floor(s%3600/60);d.textContent=s%60}
+hit();setInterval(hit,1000);
+
+/* Salin rekening */
+document.querySelectorAll("[data-salin]").forEach(function(b){b.onclick=function(){
+  var t=document.getElementById(b.dataset.salin).textContent;
+  try{navigator.clipboard.writeText(t)}catch(e){}
+  b.textContent="Tersalin";setTimeout(function(){b.textContent="Salin Rekening"},1800)}});
+
+/* RSVP & ucapan (tampilan saja; belum tersimpan ke server) */
+document.getElementById("kirimRsvp").onclick=function(){document.getElementById("okRsvp").style.display="block"};
+document.getElementById("kirimUcapan").onclick=function(){
+  var nm=document.getElementById("un"),tx=document.getElementById("ut");
+  if(!nm.value.trim()||!tx.value.trim())return;
+  var box=document.createElement("div"),b=document.createElement("b"),p=document.createElement("p");
+  b.textContent=nm.value;p.textContent=tx.value;p.style.margin="2px 0 0";box.append(b,p);
+  document.getElementById("daftar").prepend(box);nm.value="";tx.value="";
+};
+</script>
+</body>
+</html>
